@@ -1,32 +1,26 @@
-CREATE DATABASE db_quitanda;
-
-USE db_quitanda;
-
-CREATE TABLE tb_categoria(
+CREATE DATABASE db_generation_game_online;
+USE db_generation_game_online;
+CREATE TABLE tb_classes(
 id BIGINT AUTO_INCREMENT,
-descricao VARCHAR(255),
-ativo BOOLEAN,
+classe VARCHAR(255),
+especial VARCHAR(255),
 PRIMARY KEY(id)
 );
-
-CREATE TABLE tb_produtos(
+CREATE TABLE tb_personagens(
 id BIGINT AUTO_INCREMENT,
 nome VARCHAR(255),
-preco INT,
-qtProduto INT,
+ataque INT,
+defesa INT,
+vida INT,
 PRIMARY KEY (id),
-categoria_id BIGiNT,
-FOREIGN KEY(categoria_id) REFERENCES tb_categoria(id)
+classe_id BIGINT,
+FOREIGN KEY (classe_id) REFERENCES tb_classes(id)
 );
-SELECT * FROM tb_produtos INNER JOIN tb_categoria ON tb_categoria.id = tb_produtos.categoria_id;
-
-INSERT INTO tb_categoria(descricao,ativo) VALUE("fruta",false);
-INSERT INTO tb_produtos(nome,preco,qtProduto,categoria_id) VALUE("brócolis",8,15,2);
-
-
-SELECT * FROM tb_produtos;
-SELECT * FROM tb_categoria;
-SELECT * FROM tb_produtos INNER JOIN tb_categoria ON tb_categoria.id = tb_produtos.categoria_id WHERE preco >50;
-SELECT * FROM tb_produtos INNER JOIN tb_categoria ON tb_categoria.id = tb_produtos.categoria_id WHERE nome LIKE "%a%";
-UPDATE tb_produtos SET nome ="melancia" WHERE id= 1;
+INSERT INTO tb_classes(classe,especial)VALUE("paladino","barreira de luz");
+INSERT INTO tb_personagens(nome,ataque,defesa,vida,classe_id) VALUE ("jervis",2900,1800,4200,3);
+SELECT * FROM tb_personagens WHERE ataque > 2000;
+SELECT * FROM tb_personagens WHERE defesa > 1000 AND defesa < 2000;
+SELECT * FROM tb_personagens WHERE nome LIKE "%c%";
+SELECT * FROM tb_personagens INNER JOIN tb_classes ON tb_classes.id = tb_personagens.classe_id ;
+SELECT * FROM tb_personagens INNER JOIN tb_classes ON tb_classes.id = tb_personagens.classe_id WHERE tb_personagens.classe_id = 2;
 
